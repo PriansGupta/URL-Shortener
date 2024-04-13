@@ -5,7 +5,7 @@ import { FiCopy } from "react-icons/fi";
 
 function App() {
   const [originalUrl, setOriginalUrl] = useState("");
-  const [shortUrl, setShortUrl] = useState("https://www.shorturl.at/");
+  const [shortUrl, setShortUrl] = useState("https://www.My_URL_Shortener/");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isEmptyWarning, setIsEmptyWarning] = useState(false);
