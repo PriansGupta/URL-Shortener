@@ -5,7 +5,7 @@ import { FiCopy } from "react-icons/fi";
 
 function App() {
   const [originalUrl, setOriginalUrl] = useState("");
-  const [shortUrl, setShortUrl] = useState("https://www.My_URL_Shortener/");
+  const [shortUrl, setShortUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isEmptyWarning, setIsEmptyWarning] = useState(false);
@@ -18,7 +18,13 @@ function App() {
     setIsEmptyWarning(false);
     setLoading(true);
     try {
-      const response = await axios.post("/shorten", { originalUrl });
+      const response = await axios.post(
+        "https://make-it-easyy.vercel.app/shorten",
+        {
+          originalUrl,
+        }
+      );
+      console.log(response.data);
       setShortUrl(response.data.shortUrl);
     } catch (error) {
       console.error("Error shortening URL:", error);
