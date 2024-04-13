@@ -99,7 +99,7 @@ function App() {
                 </a>
               </span>
               {copied && (
-                <div className="bg-green-500 text-white px-2 py-1 rounded-md">
+                <div className="bg-green-500 font-bold text-white px-2 py-1 rounded-md">
                   Copied!
                 </div>
               )}
