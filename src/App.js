@@ -103,7 +103,7 @@ function App() {
                 </a>
               </span>
               {copied && (
-                <div className="bg-green-500 font-bold text-white px-2 py-1 rounded-md">
+                <div className="fixed top-[56.7%] left-[63%] transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white font-bold px-2 py-1 rounded-md">
                   Copied!
                 </div>
               )}
