@@ -29,9 +29,7 @@ function App() {
     } catch (error) {
       console.error("Error shortening URL:", error);
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, [1000]);
+      setLoading(false);
     }
   };
 
