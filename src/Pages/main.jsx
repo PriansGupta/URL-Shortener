@@ -31,7 +31,7 @@ function Main() {
         setIsEmptyWarning(false);
         setLoading(true);
         try {
-            const response = await axios.post("http://localhost:5000/shorten", {
+            const response = await axios.post("https://make-it-easyy.vercel.app/shorten", {
                 originalUrl,
             });
             console.log(response.data);
@@ -66,7 +66,6 @@ function Main() {
                     <h2 className="text-xl md:text-3xl font-bold text-center mb-4">
                         Welcome, {user?.displayName}
                     </h2>
-
                     <div className="flex flex-col md:flex-row">
                         <input
                             type="text"
