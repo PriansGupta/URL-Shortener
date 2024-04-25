@@ -19,7 +19,7 @@ function Main() {
 
     const GetDetailsUser = async (email) => {
         // console.log(email);
-        const response = await axios.post("http://localhost:5000/get-user", {
+        const response = await axios.post("https://make-it-easyy.vercel.app/get-user", {
             email
         });
         setCredit(response.data.user?.credits);
