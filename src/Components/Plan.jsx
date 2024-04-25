@@ -34,7 +34,7 @@ function Plan(props) {
             receipt: "qwsaql"
         }
 
-        const response = await axios.post("http://localhost:5000/order", body);
+        const response = await axios.post("https://make-it-easyy.vercel.app/order", body);
         setLoading(false);
         console.log(response.data.id);
 
