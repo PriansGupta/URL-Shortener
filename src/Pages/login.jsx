@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import auth from '../Auth/firebase';
+import axios from 'axios';
 
 const Login = (props) => {
-    const handleGoogleLogin = () => {
+    const LoginUser = async (email) => {
+        // console.log(email);
+        const response = await axios.post("https://make-it-easyy.vercel.app/sign-in", {
+            email
+        })
+        console.log(response.data);
+    }
+    const handleGoogleLogin = async () => {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
-                console.log('Logged in successfully', result.user);
+                // console.log('Logged in successfully', result.user);
                 props.onLogin(true);
+                // console.log(result.user.email);
+                LoginUser(result.user.email);
             })
             .catch((error) => {
                 console.error('Error signing in with Google', error);

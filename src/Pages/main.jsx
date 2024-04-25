@@ -5,6 +5,7 @@ import { FiCopy } from "react-icons/fi";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import auth from "../Auth/firebase";
 import Avatar from "../Components/Avatar";
+import CreditModal from "../Components/Modal";
 
 function Main() {
     const [originalUrl, setOriginalUrl] = useState("");
@@ -13,13 +14,30 @@ function Main() {
     const [copied, setCopied] = useState(false);
     const [isEmptyWarning, setIsEmptyWarning] = useState(false);
     const [user, setUser] = useState(null);
-    const [authInitialized, setAuthInitialized] = useState(false);
+    const [credits, setCredit] = useState(null);
+    const [modalShow, setModalShow] = useState(null);
+
+    const GetDetailsUser = async (email) => {
+        // console.log(email);
+        const response = await axios.post("http://localhost:5000/get-user", {
+            email
+        });
+        setCredit(response.data.user?.credits);
+        // console.log(response.data.user);
+    }
+
+    if (credits == null) {
+        GetDetailsUser(user?.email);
+    }
+    useEffect(() => {
+        GetDetailsUser(user?.email)
+    }, [user])
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setUser(user);
         });
-
+        // GetDetailsUser(user?.email);
         return () => unsubscribe();
     }, []);
 
@@ -30,12 +48,18 @@ function Main() {
         }
         setIsEmptyWarning(false);
         setLoading(true);
+        setShortUrl("");
         try {
             const response = await axios.post("https://make-it-easyy.vercel.app/shorten", {
                 originalUrl,
+                email: user.email
             });
             console.log(response.data);
+            if (response.data.message === "Not enough credits")
+                setModalShow(true);
+
             setShortUrl(response.data.shortUrl);
+            GetDetailsUser(user.email);
         } catch (error) {
             console.error("Error shortening URL:", error);
         } finally {
@@ -57,8 +81,12 @@ function Main() {
 
     return (
         <div className="w-full flex justify-center items-center">
+            <CreditModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            ></CreditModal>
             <div className="absolute top-0 right-0 mt-4 mr-4">
-                <Avatar user={user}></Avatar>
+                <Avatar user={user} credits={credits}></Avatar>
             </div>
             <div className="w-full md:w-[70%] flex flex-col md:flex-row justify-center items-center">
                 <Loader open={loading} />
@@ -86,7 +114,7 @@ function Main() {
                         />
                         <button
                             onClick={handleShorten}
-                            className="bg-blue-500 font-bold text-white px-4 py-2 rounded text-sm"
+                            className="bg-blue-500 h-full font-bold text-white px-3 py-2 rounded text-sm"
                             disabled={loading}
                         >
                             {loading ? "Loading. . . ." : "Shorten URL"}

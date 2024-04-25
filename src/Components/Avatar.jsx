@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { signOut } from 'firebase/auth';
 import auth from '../Auth/firebase';
+import { GiCreditsCurrency } from "react-icons/gi";
 
-const Avatar = ({ user }) => {
+const Avatar = ({ user, credits }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleToggleDropdown = () => {
@@ -15,6 +16,8 @@ const Avatar = ({ user }) => {
         setIsOpen(false);
     };
 
+    // console.log(user?.photoURL);
+
     return (
         <div className="relative" onMouseEnter={handleToggleDropdown} onMouseLeave={handleToggleDropdown}>
             <img
@@ -23,12 +26,18 @@ const Avatar = ({ user }) => {
                 className="w-12 h-12 rounded-full border-2 border-white cursor-pointer"
             />
             {isOpen && (
-                <div className="absolute top-full right-0 bg-white border border-gray-300 rounded-md shadow-md py-2">
-                    <ul className='cursor-pointer'>
-                        <li className="px-4 py-2 flex items-center hover:bg-gray-100" onClick={handleLogout}>
+                <div className="absolute w-[160px] top-full right-0 bg-white border border-gray-300 rounded-md shadow-md py-2">
+                    <div className='cursor-pointer flex flex-col-reverse w-full'>
+                        <div className="py-2 px-2 w-full flex items-center hover:bg-gray-100" onClick={handleLogout}>
                             <FiLogOut className="mr-2" /> Logout
-                        </li>
-                    </ul>
+                        </div>
+                        <div className="py-2 px-2 w-full flex items-center hover:bg-gray-100">
+                            <div className="flex items-baseline text-center">
+                                <GiCreditsCurrency className="mr-2" />
+                                Credits : {credits}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
